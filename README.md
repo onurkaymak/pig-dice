@@ -40,6 +40,6 @@ Describe hold()
 Test #1: "It should add roundTotal number into total number."
 Code:
 Game.prototype.hold()
-Expected Output: {id:1, roundTotal: roundTotal, total: total += roundTotal, turn: true}
+Expected Output: {id:1, roundTotal: 0, total: total += roundTotal, turn: false}
 
 ```
