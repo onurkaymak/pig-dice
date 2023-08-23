@@ -1,3 +1,11 @@
+// Utility Logic
+
+function checkForTheWin(player) {
+    if (player.total >= 10 || player.total + player.roundTotal >= 10) {
+        console.log(`We have a winner! The winner is player ${player.id}`);
+    }
+}
+
 //Business Logic
 
 function Player(id, roundTotal, total) {
@@ -42,4 +50,17 @@ Game.prototype.hold = function (player) {
     player.turn = false;
     checkForTheWin(player);
 };
+
+const player1 = new Player(1, 0, 0);
+const player2 = new Player(2, 0, 0);
+
+const game = new Game();
+game.addPlayers(player1, player2);
+
+game.setTurns(player1, player2);
+
+game.rollDice(player1);
+console.log(player1);
+game.rollDice(player1);
+console.log(player1);
 
