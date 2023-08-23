@@ -20,4 +20,11 @@ Code:
 Game.prototype.addPlayers(player1, player2);
 Expected Output: { players: { 1: {...}, 2: {...} } }
 
+Describe setTurns()
+
+Test #1: "It should set players' turns to decide who is going to play next"
+Code:
+Game.prototype.setTurns();
+Expected Output: {id:1, turnTotal: 0, total: 0, turn: true}
+
 ```
