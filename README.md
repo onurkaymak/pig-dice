@@ -9,7 +9,8 @@ Expected Output: {...}
 Describe Game()
 
 Test #1: "It should create a Game constructor function with defined properties"
-Code: Game()
-Expected Output: {...}
+Code:
+const game = new Game();
+Expected Output: { players: {...} }
 
 ```
