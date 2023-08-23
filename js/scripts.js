@@ -16,3 +16,24 @@ Game.prototype.addPlayers = function (player1, player2) {
     this.players[player2.id] = player2;
 };
 
+Game.prototype.setTurns = function (playerToPlay, playerToWait) {
+    playerToPlay.turn = true;
+    playerToWait.turn = false;
+};
+
+
+
+const player1 = new Player(1, 0, 0);
+const player2 = new Player(2, 0, 0);
+
+const game = new Game();
+game.addPlayers(player1, player2);
+
+console.log(player1);
+console.log(player2);
+console.log(game);
+
+game.setTurns(player1, player2);
+
+console.log(player1);
+console.log(player2);
