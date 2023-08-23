@@ -24,24 +24,14 @@ Game.prototype.setTurns = function (playerToPlay, playerToWait) {
 Game.prototype.rollDice = function (player) {
     let dice = Math.floor(Math.random() * 6 + 1);
 
-    console.log(dice);
+    console.log(`Dice = ${dice}`);
 
     if (dice === 1) {
         player.roundTotal = 0;
+        player.turn = false;
     }
     else {
         player.roundTotal += dice;
     }
 };
 
-
-
-const player1 = new Player(1, 0, 0);
-const player2 = new Player(2, 0, 0);
-
-const game = new Game();
-game.addPlayers(player1, player2);
-
-
-game.rollDice(player1);
-console.log(player1);

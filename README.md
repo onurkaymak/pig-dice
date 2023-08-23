@@ -35,4 +35,11 @@ Code:
 Game.prototype.rollDice()
 Expected Output: {id:1, roundTotal: roundTotal, total: total += roundTotal, turn: true}
 
+Describe hold()
+
+Test #1: "It should add roundTotal number into total number."
+Code:
+Game.prototype.hold()
+Expected Output: {id:1, roundTotal: roundTotal, total: total += roundTotal, turn: true}
+
 ```
