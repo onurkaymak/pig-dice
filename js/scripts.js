@@ -32,28 +32,14 @@ Game.prototype.rollDice = function (player) {
     }
     else {
         player.roundTotal += dice;
+        checkForTheWin(player);
     }
 };
 
 Game.prototype.hold = function (player) {
     player.total += player.roundTotal;
     player.roundTotal = 0;
+    player.turn = false;
+    checkForTheWin(player);
 };
 
-
-
-const player1 = new Player(1, 0, 0);
-const player2 = new Player(2, 0, 0);
-
-const game = new Game();
-game.addPlayers(player1, player2);
-
-game.setTurns(player1, player2);
-game.rollDice(player1);
-console.log(player1);
-
-game.rollDice(player1);
-console.log(player1);
-
-game.hold(player1);
-console.log(player1);
