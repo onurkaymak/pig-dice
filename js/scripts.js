@@ -1,8 +1,8 @@
 //Business Logic
 
-function Player(name, turnTotal, total) {
-    this.id = name;
-    this.turnTotal = turnTotal;
+function Player(id, roundTotal, total) {
+    this.id = id;
+    this.roundTotal = roundTotal;
     this.total = total;
     this.turn = false;
 }
@@ -21,19 +21,3 @@ Game.prototype.setTurns = function (playerToPlay, playerToWait) {
     playerToWait.turn = false;
 };
 
-
-
-const player1 = new Player(1, 0, 0);
-const player2 = new Player(2, 0, 0);
-
-const game = new Game();
-game.addPlayers(player1, player2);
-
-console.log(player1);
-console.log(player2);
-console.log(game);
-
-game.setTurns(player1, player2);
-
-console.log(player1);
-console.log(player2);
