@@ -6,6 +6,16 @@ function checkForTheWin(player) {
     }
 }
 
+function findWhoIsNext(id, players, game) {
+    if (game.players[id] !== undefined) {
+        let whoIsNext = players.filter(function (p) {
+            return p !== id;
+        })
+        console.log(`Next turn is for ${whoIsNext}`)
+        return whoIsNext;
+    }
+}
+
 
 //Business Logic
 
