@@ -1,3 +1,20 @@
 body {
-  background-color: black;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 50%;
+  width: 50%;
+  background-color: bisque;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
