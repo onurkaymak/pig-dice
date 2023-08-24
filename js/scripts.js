@@ -27,6 +27,7 @@ function Player(id, roundTotal, total) {
 
 function Game() {
     this.players = {};
+    this.dice = 0;
 }
 
 Game.prototype.addPlayers = function (player1, player2) {
@@ -40,7 +41,12 @@ Game.prototype.setTurns = function (playerToPlay, playerToWait) {
 };
 
 Game.prototype.rollDice = function (player, game) {
-    let dice = Math.floor(Math.random() * 6 + 1);
+    let diceNum = Math.floor(Math.random() * 6 + 1);
+
+
+    this.dice = diceNum;
+
+    let dice = this.dice;
     console.log(`Dice = ${dice}`);
 
     if (dice === 1) {
@@ -57,10 +63,10 @@ Game.prototype.rollDice = function (player, game) {
     }
     else {
         player.roundTotal += dice;
-        console.log(game.players)
         checkForTheWin(player);
+        console.log(game.players)
     }
-    return player;
+    return { player, dice };
 
 
 };
@@ -85,8 +91,14 @@ Game.prototype.hold = function (player, game) {
 //UI Logic
 
 function rollDice(player, game) {
+
+    const diceSpan = document.getElementById("num-dice");
+
+
     const result = game.rollDice(player, game);
+    diceSpan.innerText = result.dice;
     return result;
+
 
 };
 
@@ -108,11 +120,18 @@ function startTheGame() {
     game.addPlayers(p1, p2);
     game.setTurns(p1, p2);
 
+    const diceSpan = document.getElementById("num-dice");
+    diceSpan.innerText = 0;
+
+
+
 
     p1rollbtn.addEventListener('click', function () {
         const result = rollDice(p1, game);
 
-        if (result.turn === false) {
+
+        if (result.player.turn === false) {
+            console.log('it works')
             p1rollbtn.setAttribute("disabled", "disabled");
             p1holdbtn.setAttribute("disabled", "disabled");
             p2rollbtn.removeAttribute("disabled", "disabled");
@@ -138,7 +157,7 @@ function startTheGame() {
     p2rollbtn.addEventListener('click', function () {
         const result = rollDice(p2, game);
 
-        if (result.turn === false) {
+        if (result.player.turn === false) {
             p2rollbtn.setAttribute("disabled", "disabled");
             p2holdbtn.setAttribute("disabled", "disabled");
             p1rollbtn.removeAttribute("disabled", "disabled");
@@ -154,7 +173,6 @@ function startTheGame() {
         if (result.turn === false) {
             p2holdbtn.setAttribute("disabled", "disabled");
             p2rollbtn.setAttribute("disabled", "disabled");
-
             p1holdbtn.removeAttribute("disabled", "disabled");
             p1rollbtn.removeAttribute("disabled", "disabled");
         }
