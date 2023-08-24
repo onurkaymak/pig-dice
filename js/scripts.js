@@ -11,7 +11,6 @@ function findWhoIsNext(id, players, game) {
         let whoIsNext = players.filter(function (p) {
             return p !== id;
         })
-        console.log(`Next turn is for ${whoIsNext}`)
         return whoIsNext;
     }
 }
@@ -51,13 +50,14 @@ Game.prototype.rollDice = function (player, game) {
         let id = player.id.toString();
         let players = Object.keys(game.players);
 
-        let result = findWhoSNext(id, players, game)
+        let result = findWhoIsNext(id, players, game)
         game.players[result].turn = true;
 
         console.log(game.players);
     }
     else {
         player.roundTotal += dice;
+        console.log(game.players)
         checkForTheWin(player);
     }
     return player;
@@ -65,20 +65,24 @@ Game.prototype.rollDice = function (player, game) {
 
 };
 
-Game.prototype.hold = function (player) {
+Game.prototype.hold = function (player, game) {
     player.total += player.roundTotal;
     player.roundTotal = 0;
     player.turn = false;
-    checkForTheWin(player);
+
+    let id = player.id.toString();
+    let players = Object.keys(game.players);
+
+    let result = findWhoIsNext(id, players, game);
+    game.players[result].turn = true;
+
+    checkForTheWin(id, players, game);
+    console.log(game.players)
+    return player
 };
 
 
 //UI Logic
-
-const checkForTheTurn = function () {
-    // console.log(game);
-};
-
 
 function rollDice(player, game) {
     const result = game.rollDice(player, game);
@@ -87,8 +91,8 @@ function rollDice(player, game) {
 };
 
 function hold(player, game) {
-    game.hold(player);
-    // console.log(player)
+    const result = game.hold(player, game);
+    return result;
 };
 
 function startTheGame() {
@@ -98,41 +102,62 @@ function startTheGame() {
     const p2rollbtn = document.getElementById("roll-2");
     const p2holdbtn = document.getElementById("hold-2");
 
-
     const p1 = new Player(1, 0, 0);
     const p2 = new Player(2, 0, 0);
     const game = new Game();
     game.addPlayers(p1, p2);
     game.setTurns(p1, p2);
 
-    console.log(game.players)
-
-    p2rollbtn.setAttribute("disabled", "disabled");
 
     p1rollbtn.addEventListener('click', function () {
         const result = rollDice(p1, game);
 
         if (result.turn === false) {
             p1rollbtn.setAttribute("disabled", "disabled");
+            p1holdbtn.setAttribute("disabled", "disabled");
             p2rollbtn.removeAttribute("disabled", "disabled");
+            p2holdbtn.removeAttribute("disabled", "disabled");
         }
     });
 
     p1holdbtn.addEventListener('click', function () {
-        hold(p1, game);
+        const result = hold(p1, game);
+
+        if (result.turn === false) {
+            p1holdbtn.setAttribute("disabled", "disabled");
+            p1rollbtn.setAttribute("disabled", "disabled");
+
+            p2holdbtn.removeAttribute("disabled", "disabled");
+            p2rollbtn.removeAttribute("disabled", "disabled");
+        }
     });
+
+
+
 
     p2rollbtn.addEventListener('click', function () {
         const result = rollDice(p2, game);
 
         if (result.turn === false) {
             p2rollbtn.setAttribute("disabled", "disabled");
+            p2holdbtn.setAttribute("disabled", "disabled");
             p1rollbtn.removeAttribute("disabled", "disabled");
+            p1holdbtn.removeAttribute("disabled", "disabled");
         }
     });
 
+
+
     p2holdbtn.addEventListener('click', function () {
-        hold(p2, game);
+        const result = hold(p2, game);
+
+        if (result.turn === false) {
+            p2holdbtn.setAttribute("disabled", "disabled");
+            p2rollbtn.setAttribute("disabled", "disabled");
+
+            p1holdbtn.removeAttribute("disabled", "disabled");
+            p1rollbtn.removeAttribute("disabled", "disabled");
+        }
     });
 
 };
@@ -147,13 +172,3 @@ window.addEventListener('load', function () {
 });
 
 
-let word = "red";
-
-const sentence = `Hi, this color is ${word}`;
-
-console.log(sentence);
-
-
-word = "blue";
-
-console.log(sentence);
