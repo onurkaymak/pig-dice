@@ -44,6 +44,24 @@ Game.prototype.rollDice = function (player, game) {
     let dice = Math.floor(Math.random() * 6 + 1);
     console.log(`Dice = ${dice}`);
 
+    if (dice === 1) {
+        player.roundTotal = 0;
+        player.turn = false;
+
+        let id = player.id.toString();
+        let players = Object.keys(game.players);
+
+        let result = findWhoSNext(id, players, game)
+        game.players[result].turn = true;
+
+        console.log(game.players);
+    }
+    else {
+        player.roundTotal += dice;
+        checkForTheWin(player);
+    }
+    return player;
+
 
 };
 
@@ -65,6 +83,7 @@ const checkForTheTurn = function () {
 function rollDice(player, game) {
     const result = game.rollDice(player, game);
     return result;
+
 };
 
 function hold(player, game) {
